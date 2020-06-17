@@ -44,13 +44,21 @@ pkg_setup(){
 }
 
 src_install(){
+	echo -e "[Desktop Entry]\n\
+Version=1.0\n\
+Name=Visual Studio Code\n\
+Comment=Code editing. Redefined.\n\
+Exec=/usr/bin/vscode\n\
+StartupNotify=true\n\
+Type=Application\n\
+Categories=Development;IDE
+" > ${S}/visual-studio-code.desktop
 	local DEST="/opt/${PN}"
 	pax-mark m code
 	insinto "${DEST}"
 	doins -r *
 	dosym "${DEST}/bin/code" "/usr/bin/${PN}"
 	dosym "${DEST}/bin/code" "/usr/bin/vscode"
-	make_desktop_entry "vscode" "Visual Studio Code" "${PN}" "Development;IDE"
 	#doicon "${FILESDIR}/${PN}.png"
 	fperms +x "${DEST}/code"
 	fperms +x "${DEST}/bin/code"
@@ -66,6 +74,8 @@ src_install(){
 	do
 		newins "${i}" "`basename ${i}`"
 	done
+	insinto /usr/share/applications/
+	doins ${S}/visual-studio-code.desktop
 }
 
 pkg_postinst(){

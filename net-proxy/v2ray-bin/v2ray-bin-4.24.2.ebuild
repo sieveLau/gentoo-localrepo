@@ -27,8 +27,8 @@ src_prepare(){
 	default
 	mv config.json config.json.example
 	touch v2ray-screen.sh
-	echo "#\!/bin/sh" > v2ray-screen.sh
-	echo "screen -d -m v2ray" > v2ray-screen.sh
+	echo "#!/bin/sh" > v2ray-screen.sh
+	echo "screen -d -m v2ray" >> v2ray-screen.sh
 }
 
 src_install(){
@@ -38,5 +38,6 @@ src_install(){
 	fperms +x "${DEST}/v2ray"
 	fperms +x "${DEST}/v2ctl"
 	fperms +x "${DEST}/v2ray-screen.sh"
-	dosym "${DEST}/v2ray-screen.sh" "/usr/bin/v2ray"
+	dosym "${DEST}/v2ray" "/usr/bin/v2ray"
+	dosym "${DEST}/v2ctl" "/usr/bin/v2ctl"
 }
